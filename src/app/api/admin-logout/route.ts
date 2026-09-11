@@ -1,0 +1,15 @@
+import { NextResponse } from 'next/server';
+
+export const runtime = 'nodejs';
+
+export async function POST(): Promise<NextResponse> {
+  const response = NextResponse.json({ ok: true });
+  response.cookies.set('nbs_admin', '', {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: 0,
+  });
+  return response;
+}

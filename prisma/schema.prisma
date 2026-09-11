@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FormSchema {
+  id        String   @id @default(uuid())
+  title     String
+  questions Json     // Storing the dynamic logic jumps and questions as JSONB
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  contact   String
+  status    String   @default("NEW")
+  value     String?
+  metadata  Json?    // Storing UTM parameters and hidden fields as JSONB
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

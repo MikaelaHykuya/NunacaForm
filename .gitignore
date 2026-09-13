@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# skills lock (tool-generated)
+skills-lock.json
+
+.vercel
+.env*

@@ -225,8 +225,11 @@ create table if not exists public.usecases (
   subtitle text not null default '',
   description text not null default '',
   icon text not null default 'Sparkles',
+  url text not null default '',
   sort_order int not null default 0
 );
+
+alter table public.usecases add column if not exists url text not null default '';
 
 revoke all on public.blog_posts from anon, authenticated;
 revoke all on public.usecases from anon, authenticated;
@@ -266,13 +269,13 @@ insert into public.blog_posts (slug, title, category, author, author_role, date,
 ('tracking-utm-dan-lead', 'Memahami Sumber Lead dengan Hidden Fields & UTM Tracking', 'Analitik', 'Nunaca IT Team', 'Internal Engineering', '2026-05-10', '3 menit', 'Tidak semua pertanyaan harus ditanyakan kepada responden. Parameter URL bisa otomatis tersimpan sebagai hidden fields untuk menganalisis sumber trafik.', '["Salah satu pertanyaan yang paling sering muncul di tim marketing: \"lead ini datang dari mana?\" Dengan formulir statis, jawabannya biasanya hilang begitu saja.","Nunaca Form memiliki fitur hidden fields tracking. Ketika responden membuka link form dengan parameter UTM (misalnya ?utm_source=instagram&utm_campaign=lunch-promo), seluruh parameter tersebut otomatis tersimpan sebagai metadata respons.","Responden tidak melihat input tambahan apa pun. Mereka tidak harus menghabiskan waktu mengetik \"bagaimana Anda mengetahui kami?\" — sistem melakukannya di balik layar.","Di dashboard admin, setiap respons menampilkan parameter hidden fields tersebut. Tim bisa melihat distribusi source trafik, kampanye mana yang paling efektif, dan menghitung ROI promosi dengan akurat.","Fitur ini kami rekomendasikan untuk semua lini usaha yang aktif menjalankan promosi di media sosial atau marketplace — data atribusinya langsung tersedia sejak hari pertama."]'::jsonb)
 on conflict (slug) do nothing;
 
-insert into public.usecases (id, title, subtitle, description, icon, sort_order) values
-('barbershop', 'Nunaca Barbershop', 'Reservasi Jadwal & Stylist', 'Gunakan fitur logic jump untuk memfilter layanan yang tersedia berdasarkan tukang cukur yang dipilih, lalu arahkan ke konfirmasi tanggal yang elegan.', 'Scissors', 1),
-('beauty_bar', 'Nunaca Beauty Bar', 'Survei Kepuasan Pelanggan', 'Tingkatkan response rate ulasan layanan kecantikan Anda dengan desain satu-layar-satu-pertanyaan yang interaktif dan tidak membosankan.', 'Sparkles', 2),
-('kids_spa', 'Nunaca Baby & Kids Spa', 'Booking Treatment Anak', 'Kumpulkan data usia anak, keluhan, dan jenis terapi secara bertahap agar orang tua merasa nyaman saat mendaftar tanpa melihat form panjang.', 'Baby', 3),
-('coffee', 'Nunaca Coffee & Pastry', 'Pre-Order Catering & Meja', 'Fasilitasi pemesanan rombongan, request khusus alergi makanan, hingga reservasi meja VIP melalui kuis dinamis yang terhubung ke CRM kafe.', 'Coffee', 4),
-('agency', 'Nunaca Agency', 'Project Onboarding Klien', 'Ganti file PDF briefing yang kaku menjadi formulir interaktif. Dapatkan informasi detail seputar visi brand klien secara lebih terstruktur dan elegan.', 'Briefcase', 5),
-('skincare', 'Nunaca Skincare', 'Kuis Rekomendasi Produk', 'Buat kuis analisa jenis kulit (berminyak, kering, berjerawat). Gunakan logic jump untuk merekomendasikan paket skincare yang tepat di akhir form.', 'Droplets', 6),
-('travel', 'Nunaca Travel', 'Pemesanan Paket Tour', 'Tangkap preferensi destinasi liburan, jumlah anggota keluarga, dan request khusus itinerary langsung masuk ke database travel agent.', 'Plane', 7),
-('butik', 'Nunaca Butik', 'Pre-Order & Custom Size', 'Kumpulkan detail ukuran baju, warna, dan catatan khusus secara interaktif seolah-olah pelanggan sedang berdiskusi langsung dengan desainer.', 'Shirt', 8)
-on conflict (id) do nothing;
+insert into public.usecases (id, title, subtitle, description, icon, url, sort_order) values
+('barbershop', 'Nunaca Barbershop', 'Reservasi Jadwal & Stylist', 'Gunakan fitur logic jump untuk memfilter layanan yang tersedia berdasarkan tukang cukur yang dipilih, lalu arahkan ke konfirmasi tanggal yang elegan.', 'Scissors', 'https://nunacagroupindonesia.com/nunaca-barbershop', 1),
+('beauty_bar', 'Nunaca Beauty Bar', 'Survei Kepuasan Pelanggan', 'Tingkatkan response rate ulasan layanan kecantikan Anda dengan desain satu-layar-satu-pertanyaan yang interaktif dan tidak membosankan.', 'Sparkles', 'https://nunacagroupindonesia.com/nunaca-beauty-bar', 2),
+('kids_spa', 'Nunaca Baby & Kids Spa', 'Booking Treatment Anak', 'Kumpulkan data usia anak, keluhan, dan jenis terapi secara bertahap agar orang tua merasa nyaman saat mendaftar tanpa melihat form panjang.', 'Baby', 'https://nunacagroupindonesia.com/nunaca-baby-kids-spa', 3),
+('coffee', 'Nunaca Coffee & Pastry', 'Pre-Order Catering & Meja', 'Fasilitasi pemesanan rombongan, request khusus alergi makanan, hingga reservasi meja VIP melalui kuis dinamis yang terhubung ke CRM kafe.', 'Coffee', 'https://nunacagroupindonesia.com/nunaca-coffee-pastry', 4),
+('agency', 'Nunaca Agency', 'Project Onboarding Klien', 'Ganti file PDF briefing yang kaku menjadi formulir interaktif. Dapatkan informasi detail seputar visi brand klien secara lebih terstruktur dan elegan.', 'Briefcase', 'https://nunacagroupindonesia.com/nunaca-agency', 5),
+('skincare', 'Nunaca Skincare', 'Kuis Rekomendasi Produk', 'Buat kuis analisa jenis kulit (berminyak, kering, berjerawat). Gunakan logic jump untuk merekomendasikan paket skincare yang tepat di akhir form.', 'Droplets', 'https://nunacagroupindonesia.com/nunaca-skincare', 6),
+('travel', 'Nunaca Travel', 'Pemesanan Paket Tour', 'Tangkap preferensi destinasi liburan, jumlah anggota keluarga, dan request khusus itinerary langsung masuk ke database travel agent.', 'Plane', 'https://nunacagroupindonesia.com/nunaca-travel', 7),
+('butik', 'Nunaca Butik', 'Pre-Order & Custom Size', 'Kumpulkan detail ukuran baju, warna, dan catatan khusus secara interaktif seolah-olah pelanggan sedang berdiskusi langsung dengan desainer.', 'Shirt', 'https://nunacagroupindonesia.com/nunaca-butik', 8)
+on conflict (id) do update set url = excluded.url, title = excluded.title, subtitle = excluded.subtitle, description = excluded.description, icon = excluded.icon;

@@ -51,13 +51,18 @@ export default function Navbar() {
     { name: 'Beranda', path: '/' },
     { name: 'Fitur', path: '/#features' },
     { name: 'Studi Kasus', path: '/usecases' },
-    { name: 'Harga', path: '/pricing' },
-    { name: 'Teknologi', path: '/tech' },
+    // { name: 'Harga', path: '/pricing' }, // Disembunyikan sementara
+    // { name: 'Teknologi', path: '/tech' }, // Dihapus
     { name: 'Tentang', path: '/about' },
-    { name: 'Blog', path: '/blog' },
+    // { name: 'Blog', path: '/blog' }, // Dihapus
     { name: 'FAQ', path: '/faq' },
     { name: 'Kontak', path: '/contact' },
   ];
+
+  // Sembunyikan navbar di area admin & builder (punya navigasi sendiri)
+  if (pathname.startsWith('/admin') || pathname === '/builder') {
+    return null;
+  }
 
   return (
     <>
@@ -69,7 +74,7 @@ export default function Navbar() {
           </Link>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex gap-8 font-medium text-white/70 text-sm items-center">
+          <div className="hidden lg:flex gap-8 font-medium text-white/70 text-sm items-center">
             {navLinks.filter(l => l.name !== 'Beranda').map((link) => (
               <Link 
                 key={link.name} 
@@ -127,7 +132,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className="md:hidden text-white hover:text-[#FFCC00] transition-colors"
+            className="lg:hidden text-white hover:text-[#FFCC00] transition-colors"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu size={28} />

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Zap, Shield, CheckCircle2, Mail, Quote } from 'lucide-react';
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { subscribeNewsletter } from '@/lib/storage';
@@ -64,7 +64,7 @@ function NewsletterSection() {
             className="flex-1 bg-neutral-900 border border-white/10 rounded-xl px-6 py-4 text-white font-medium outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all placeholder:text-white/30"
           />
           <button type="submit" className="bg-[#FFCC00] text-black px-8 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-yellow-400 transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(255,204,0,0.3)]">
-            Berlangganan <ArrowRight size={18} />
+            Submit <ArrowRight size={18} />
           </button>
         </form>
         <p className="text-xs text-white/30 mt-6 font-bold uppercase tracking-widest">
@@ -150,7 +150,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] font-sans text-white selection:bg-yellow-500/30 overflow-x-hidden">
-      <Navbar />
 
       {/* Hero Section */}
       <section className="pt-40 pb-20 px-6 max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center min-h-[90vh] relative">
@@ -162,10 +161,10 @@ export default function LandingPage() {
             <Sparkles size={14} />
             <span>Bukan Sekadar Formulir Biasa</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-[1.1] italic text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-[1.1] italic text-white">
             Buat formulir yang <br/><span className="text-[#FFCC00]">disukai pengguna.</span>
           </h1>
-          <p className="text-lg md:text-xl text-white/60 max-w-lg mb-12 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-lg mb-12 leading-relaxed">
             Nunaca Form dirancang dengan prinsip psikologi interaktif. Dapatkan lebih banyak respons dengan antarmuka yang personal, mulus, dan elegan.
           </p>
           
@@ -223,14 +222,31 @@ export default function LandingPage() {
       <section className="py-16 px-6 border-t border-white/5 bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-xs font-black uppercase tracking-[0.3em] text-white/40 mb-8">Dipercaya oleh seluruh lini usaha Nunaca Group</p>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
             {[
-              'Barbershop', 'Beauty Bar', 'Kids Spa', 'Coffee & Pastry',
-              'Agency', 'Skincare', 'Travel', 'Butik'
-            ].map((name) => (
-              <span key={name} className="text-white/30 hover:text-[#FFCC00] text-lg font-black uppercase italic tracking-widest transition-colors cursor-default">
-                {name}
-              </span>
+              { name: 'Barbershop', logo: '/nunaca-barbershop-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-barbershop' },
+              { name: 'Beauty Bar', logo: '/nunaca-beauty-bar-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-beauty-bar' },
+              { name: 'Kids Spa', logo: '/nunaca-kids-spa-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-baby-kids-spa' },
+              { name: 'Coffee & Pastry', logo: '/nunaca-coffee-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-coffee-pastry' },
+              { name: 'Agency', logo: '/nunaca-agency-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-agency' },
+              { name: 'Skincare', logo: '/nunaca-skincare-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-skincare' },
+              { name: 'Travel', logo: '/nunaca-travel-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-travel' },
+              { name: 'Butik', logo: '/nunaca-butik-logo.png', url: 'https://nunacagroupindonesia.com/nunaca-butik' }
+            ].map((unit) => (
+              <a key={unit.name} href={unit.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center opacity-30 hover:opacity-100 transition-opacity duration-300 gap-3 cursor-pointer">
+                {unit.logo ? (
+                  <>
+                    <img src={unit.logo} alt={unit.name} className="h-12 sm:h-16 w-auto object-contain rounded-md" />
+                    <span className="text-white hover:text-[#FFCC00] text-sm font-black uppercase italic tracking-widest transition-colors">
+                      {unit.name}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-white hover:text-[#FFCC00] text-lg font-black uppercase italic tracking-widest transition-colors">
+                    {unit.name}
+                  </span>
+                )}
+              </a>
             ))}
           </div>
         </div>

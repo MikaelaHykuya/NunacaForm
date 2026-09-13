@@ -35,7 +35,7 @@ export default function BackToTop() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:bg-yellow-400 hover:shadow-[0_0_30px_rgba(255,204,0,0.6)] transition-all"
+          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 p-3 rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:bg-yellow-400 hover:shadow-[0_0_30px_rgba(255,204,0,0.6)] transition-all"
           aria-label="Kembali ke Atas"
         >
           <ArrowUp size={24} strokeWidth={2.5} />

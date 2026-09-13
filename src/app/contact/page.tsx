@@ -64,7 +64,7 @@ export default function ContactPage() {
               href={c.href}
               target={c.href.startsWith('http') ? '_blank' : undefined}
               rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="group flex items-start gap-5 rounded-3xl border border-white/10 bg-neutral-900 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFCC00]/50 hover:bg-neutral-900/80"
+              className="group flex items-start gap-5 rounded-3xl border border-white/10 bg-neutral-900 p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFCC00]/50 hover:bg-neutral-900/80"
             >
               <div className="w-14 h-14 rounded-2xl bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[#FFCC00] shrink-0 group-hover:bg-[#FFCC00] group-hover:text-black transition-all">
                 {c.icon}
@@ -85,7 +85,7 @@ export default function ContactPage() {
         </div>
 
         {/* Form / CTA */}
-        <div className="rounded-3xl border border-[#FFCC00]/40 bg-gradient-to-br from-[#FFCC00]/15 to-transparent p-10 md:p-14 text-center">
+        <div className="rounded-3xl border border-[#FFCC00]/40 bg-gradient-to-br from-[#FFCC00]/15 to-transparent p-8 sm:p-10 md:p-14 text-center">
           <h2 className="text-2xl md:text-4xl font-black uppercase italic tracking-tighter mb-4">
             Sudah siap mencoba <span className="text-[#FFCC00]">Form Engine</span>?
           </h2>
@@ -93,12 +93,12 @@ export default function ContactPage() {
             Mulai gratis sekarang, atau lihat paket yang sesuai dengan kebutuhan lini usaha Anda.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
+            {/* <Link
               href="/pricing"
               className="inline-flex items-center gap-3 bg-[#FFCC00] text-black px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-yellow-400 transition-all shadow-[0_0_30px_rgba(255,204,0,0.3)]"
             >
               Lihat Harga <ArrowRight size={16} />
-            </Link>
+            </Link> */}
             <Link
               href="/form"
               className="inline-flex items-center gap-3 border border-white/20 text-white px-8 py-4 rounded-xl text-sm font-black uppercase tracking-widest hover:border-[#FFCC00] hover:text-[#FFCC00] transition-all"

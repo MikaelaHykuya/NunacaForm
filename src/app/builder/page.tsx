@@ -22,6 +22,25 @@ export default function BuilderPage() {
   const [copied, setCopied] = useState(false);
   const [published, setPublishedState] = useState(true);
   const router = useRouter();
+  const [isDesktop, setIsDesktop] = useState(false);
+  const rightPanelRef = useRef<HTMLDivElement>(null);
+
+  // Deteksi mode desktop (>= 1024px) untuk ukuran panel yang bisa diresize
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  // Di HP: mengetuk pertanyaan otomatis menggulir ke panel pengaturan
+  useEffect(() => {
+    if (isDesktop) return;
+    if (activeQuestion) {
+      rightPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [activeQuestion, isDesktop]);
 
   // Resizable right panel
   const [panelWidth, setPanelWidth] = useState(500);
@@ -212,34 +231,75 @@ export default function BuilderPage() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#050505] font-sans text-white flex overflow-hidden selection:bg-[#FFCC00]/30">
-      
-      {/* COLUMN 1: LEFT SIDEBAR (Question List) */}
-      <div className="w-[340px] bg-black/60 backdrop-blur-3xl border-r border-white/10 flex flex-col h-full z-20 shadow-[20px_0_40px_-20px_rgba(0,0,0,0.8)] relative">
-        <div className="h-24 border-b border-white/10 flex flex-col justify-center px-6 shrink-0 bg-gradient-to-b from-black/80 to-transparent">
-          <div className="flex items-center justify-between mb-4">
-            <Link href="/" className="text-white/40 hover:text-[#FFCC00] flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] transition-all hover:-translate-x-1">
-              <ArrowLeft size={14} /> Beranda
-            </Link>
-          </div>
-          <div className="relative group">
-            <select 
+    <div className="min-h-screen w-full bg-[#050505] font-sans text-white flex flex-col lg:h-screen lg:overflow-hidden selection:bg-[#FFCC00]/30">
+
+      {/* TOP TOOLBAR */}
+      <div className="shrink-0 border-b border-white/10 bg-black/40 backdrop-blur-2xl px-4 sm:px-6 lg:px-10 py-3 sm:py-4 z-30 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 shadow-sm">
+        {/* Left: Beranda + workspace */}
+        <div className="flex items-center gap-4 lg:flex-none">
+          <Link href="/" className="text-white/40 hover:text-[#FFCC00] flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] transition-all hover:-translate-x-1 shrink-0">
+            <ArrowLeft size={14} /> Beranda
+          </Link>
+          <div className="relative flex-1 lg:w-64">
+            <select
               value={activeWorkspace}
               onChange={(e) => setActiveWorkspace(e.target.value)}
-              className="w-full bg-[#111] border border-white/10 rounded-xl py-3 pl-4 pr-10 text-xs font-bold outline-none focus:border-[#FFCC00] text-white/90 shadow-inner appearance-none cursor-pointer transition-colors group-hover:border-white/20"
+              className="w-full bg-[#111] border border-white/10 rounded-xl py-2.5 pl-4 pr-9 text-xs font-bold outline-none focus:border-[#FFCC00] text-white/90 shadow-inner appearance-none cursor-pointer transition-colors hover:border-white/20"
             >
               {businessLines.map(line => (
                 <option key={line.id} value={line.id}>{line.name}</option>
               ))}
             </select>
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-hover:text-[#FFCC00] transition-colors">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">
               <Settings2 size={14} />
             </div>
           </div>
         </div>
-        
-        <div className="p-6 flex items-center justify-between group cursor-pointer transition-colors hover:bg-white/5" onClick={() => setActiveQuestion(null)}>
-          <div className="flex items-center gap-4 text-white/90">
+
+        {/* Right: Actions */}
+        <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
+          <button
+            onClick={togglePublish}
+            title={published ? 'Form saat ini terbit dan bisa diakses publik' : 'Form terkunci — bukan admin/pemilik tak bisa buka'}
+            className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] transition-all duration-300 border ${published ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/25' : 'bg-red-500/15 border-red-500/50 text-red-400 hover:bg-red-500/25'}`}
+          >
+            <Rocket size={15} /> {published ? 'Terbit' : 'Lepas'}
+          </button>
+          <button
+            onClick={openPreview}
+            title="Pratinjau tampilan publik (tidak peduli status terbit)"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] transition-all duration-300 border bg-white/5 border-white/15 text-white/80 hover:bg-white/10 hover:text-white"
+          >
+            <Eye size={15} /> <span className="hidden sm:inline">Pratinjau</span><span className="sm:hidden">Preview</span>
+          </button>
+          <button
+            onClick={saveSchema}
+            className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] transition-all duration-300 ${isSaved ? 'bg-emerald-500 text-black shadow-[0_0_40px_rgba(16,185,129,0.5)] scale-95' : 'bg-[#FFCC00] text-black hover:bg-yellow-300 hover:scale-[1.02] shadow-[0_0_30px_rgba(255,204,0,0.3)]'}`}
+          >
+            <Save size={15} /> {isSaved ? 'Tersimpan!' : 'Simpan'}
+          </button>
+          <button
+            onClick={copyShareLink}
+            title="Salin link formulir ini"
+            className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] transition-all duration-300 border ${copied ? 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_30px_rgba(16,185,129,0.4)]' : 'bg-white/5 border-white/15 text-white/80 hover:bg-white/10 hover:text-white'}`}
+          >
+            {copied ? <Check size={15} /> : <Copy size={15} />} {copied ? 'Tersalin!' : <span className="hidden sm:inline">Salin Link</span>}
+          </button>
+        </div>
+      </div>
+
+      {/* Drag overlay — blocks all pointer events while resizing to prevent text selection */}
+      {isDragging && (
+        <div className="fixed inset-0 z-[9999] cursor-ew-resize" style={{ userSelect: 'none' }} />
+      )}
+
+      {/* COLUMNS */}
+      <div className="flex flex-col lg:flex-row lg:flex-1 lg:min-h-0">
+
+      {/* COLUMN 1: LEFT SIDEBAR (Question List) */}
+      <div className="w-full lg:w-[340px] lg:h-full bg-black/60 backdrop-blur-3xl lg:border-r border-b lg:border-b-0 border-white/10 flex flex-col z-20 relative lg:shadow-[20px_0_40px_-20px_rgba(0,0,0,0.8)]">
+        <div className="px-4 sm:px-6 py-4 border-b border-white/10 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer transition-colors hover:bg-white/5" onClick={() => setActiveQuestion(null)}>
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFCC00]/20 to-[#FFCC00]/5 flex items-center justify-center text-[#FFCC00] border border-[#FFCC00]/20 shadow-[0_0_15px_rgba(255,204,0,0.1)]">
               <Layers size={20} />
             </div>
@@ -248,9 +308,15 @@ export default function BuilderPage() {
               <p className="text-xs text-white/40 mt-0.5">{schema.questions.length} Pertanyaan</p>
             </div>
           </div>
+          <button
+            onClick={addQuestion}
+            className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-black bg-[#FFCC00] hover:bg-yellow-400 px-3.5 py-2 rounded-lg transition-all shrink-0"
+          >
+            <Plus size={13} /> Tambah
+          </button>
         </div>
-        
-        <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-2 custom-scrollbar">
+
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 pb-6 space-y-2 custom-scrollbar">
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="questions">
               {(provided) => (
@@ -283,7 +349,7 @@ export default function BuilderPage() {
                                 {getIconForType(q.type)} {getTypeName(q.type)}
                               </div>
                             </div>
-                            <button onClick={(e) => deleteQuestion(q.id, e)} className="opacity-0 group-hover:opacity-100 text-white/20 hover:text-white bg-transparent hover:bg-red-500/80 p-2 rounded-xl transition-all duration-300 shadow-sm">
+                            <button onClick={(e) => deleteQuestion(q.id, e)} className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-white/30 lg:text-white/20 hover:text-white bg-transparent lg:hover:bg-red-500/80 p-2 rounded-xl transition-all duration-300 shadow-sm">
                               <Trash2 size={16} />
                             </button>
                           </motion.div>
@@ -325,55 +391,14 @@ export default function BuilderPage() {
       {isDragging && (
         <div className="fixed inset-0 z-[9999] cursor-ew-resize" style={{ userSelect: 'none' }} />
       )}
-
-      {/* COLUMN 2: MIDDLE CANVAS (Preview) */}
-      <div className="flex-1 min-w-0 overflow-hidden relative flex flex-col bg-[#050505]">
+{/* COLUMN 2: MIDDLE CANVAS (Preview — desktop only) */}
+      <div className="hidden lg:flex flex-1 min-w-0 overflow-hidden relative flex-col bg-[#050505]">
         {/* Background Dot Grid */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#FFCC00]/5 rounded-full blur-[150px] pointer-events-none"></div>
         
-        {/* Top Navbar */}
-        <div className="h-20 border-b border-white/5 flex items-center justify-between px-10 bg-black/10 backdrop-blur-2xl z-10 sticky top-0 shadow-sm">
-          <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-            <div className="relative flex items-center justify-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 z-10"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 absolute animate-ping opacity-75"></div>
-            </div>
-            <span className="text-[10px] font-black text-white/80 uppercase tracking-[0.25em]">Visual Design Mode</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={togglePublish}
-              title={published ? 'Form saat ini terbit dan bisa diakses publik' : 'Form terkunci — bukan admin/pemilik tak bisa buka'}
-              className={`flex items-center gap-2 px-5 py-3.5 rounded-full text-xs font-black uppercase tracking-[0.15em] transition-all duration-300 border ${published ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/25' : 'bg-red-500/15 border-red-500/50 text-red-400 hover:bg-red-500/25'}`}
-            >
-              <Rocket size={16} /> {published ? 'Terbit' : 'Lepas'}
-            </button>
-            <button
-              onClick={openPreview}
-              title="Pratinjau tampilan publik (tidak peduli status terbit)"
-              className="flex items-center gap-2 px-5 py-3.5 rounded-full text-xs font-black uppercase tracking-[0.15em] transition-all duration-300 border bg-white/5 border-white/15 text-white/80 hover:bg-white/10 hover:text-white"
-            >
-              <Eye size={16} /> Pratinjau
-            </button>
-            <button
-              onClick={saveSchema}
-              className={`flex items-center gap-3 px-8 py-3.5 rounded-full text-xs font-black uppercase tracking-[0.15em] transition-all duration-300 ${isSaved ? 'bg-emerald-500 text-black shadow-[0_0_40px_rgba(16,185,129,0.5)] scale-95' : 'bg-[#FFCC00] text-black hover:bg-yellow-300 hover:scale-[1.02] shadow-[0_0_30px_rgba(255,204,0,0.3)]'}`}
-            >
-              <Save size={16} /> {isSaved ? 'Tersimpan!' : 'Simpan Kuis'}
-            </button>
-            <button
-              onClick={copyShareLink}
-              title="Salin link formulir ini"
-              className={`flex items-center gap-2 px-5 py-3.5 rounded-full text-xs font-black uppercase tracking-[0.15em] transition-all duration-300 border ${copied ? 'bg-emerald-500 border-emerald-500 text-black shadow-[0_0_30px_rgba(16,185,129,0.4)]' : 'bg-white/5 border-white/15 text-white/80 hover:bg-white/10 hover:text-white'}`}
-            >
-              {copied ? <Check size={16} /> : <Copy size={16} />} {copied ? 'Tersalin!' : 'Salin Link'}
-            </button>
-          </div>
-        </div>
-
         {/* Canvas Area */}
-        <div className="flex-1 flex items-center justify-center p-12 overflow-y-auto z-10 scroll-smooth">
+        <div className="flex-1 flex items-center justify-center p-12 overflow-y-auto overflow-x-hidden z-10 scroll-smooth">
           <AnimatePresence mode="wait">
           {activeQuestion ? (
              <motion.div 
@@ -444,7 +469,7 @@ export default function BuilderPage() {
       {/* RESIZE HANDLE — flex sibling, no z-index conflicts with panel content */}
       <div
         onMouseDown={startResize}
-        className="group relative shrink-0 h-full cursor-ew-resize z-30"
+        className="hidden lg:block group relative shrink-0 h-full cursor-ew-resize z-30"
         style={{ width: 16 }}
         title="Geser untuk perbesar/perkecil panel"
       >
@@ -460,10 +485,11 @@ export default function BuilderPage() {
 
       {/* COLUMN 3: RIGHT SIDEBAR (Settings) */}
       <div
-        style={{ width: panelWidth }}
-        className="shrink-0 bg-black/60 backdrop-blur-3xl border-l border-white/10 flex flex-col h-full z-20 shadow-[-20px_0_40px_-20px_rgba(0,0,0,0.8)]"
+        ref={rightPanelRef}
+        style={isDesktop ? { width: panelWidth } : undefined}
+        className="w-full lg:w-auto lg:shrink-0 lg:h-full bg-black/60 backdrop-blur-3xl lg:border-l border-t lg:border-t-0 border-white/10 flex flex-col z-20 relative lg:shadow-[-20px_0_40px_-20px_rgba(0,0,0,0.8)]"
       >
-        <div className="h-24 border-b border-white/10 flex items-center px-8 bg-gradient-to-b from-black/80 to-transparent sticky top-0 z-10">
+        <div className="px-4 sm:px-8 py-4 sm:py-6 h-auto lg:h-24 border-b border-white/10 flex items-center bg-gradient-to-b from-black/80 to-transparent sticky top-0 z-10">
           <h2 className="text-[11px] font-black text-white/90 uppercase tracking-[0.25em] flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#FFCC00]/10 flex items-center justify-center border border-[#FFCC00]/30 shadow-[0_0_15px_rgba(255,204,0,0.15)]">
               <Settings2 size={16} className="text-[#FFCC00]" />
@@ -472,7 +498,7 @@ export default function BuilderPage() {
           </h2>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 scroll-smooth">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 scroll-smooth">
           {activeQuestion ? (
             <div className="animate-in fade-in slide-in-from-right-4 duration-300 pb-12">
               
@@ -729,6 +755,7 @@ export default function BuilderPage() {
             </div>
           )}
         </div>
+      </div>
       </div>
 
     </div>

@@ -11,8 +11,8 @@ import {
   pushResponse, incrementCounter,
   pullResponses, pullNewsletter,
   pushNewsletter, removeNewsletterRemote,
-  pullPublished, pushPublished, pullCounters, pullSchema, pushSchema,
-  deleteResponseRemote, clearResponsesRemote,
+  pullPublished, pushPublished, pullCounters, pullSchema,
+  pushSchema, deleteResponseRemote, clearResponsesRemote,
 } from './supabase';
 import { FormSchema } from '@/types/form';
 
@@ -159,16 +159,17 @@ export function removeSubscriber(email: string): boolean {
 export async function syncFromSupabase(workspace: string): Promise<void> {
   if (!supabase) return;
 
+  // Fetch semua data paralel (schema di-skip — dihandle di form/page dengan getCachedSchema)
   const [remoteResponses, remoteNews, remotePublished, remoteCounters, remoteSchema] =
     await Promise.all([
       pullResponses(workspace),
       pullNewsletter(),
       pullPublished(workspace),
       pullCounters(workspace),
-      pullSchema(workspace),
+      pullSchema(workspace),  // tetap fetch untuk admin dashboard sync
     ]);
 
-  // Respons — gabungkan remote + respons lokal yang belum sempat ter-push
+  // Respons — remote sebagai sumber kebenaran, tambahkan lokal yang belum ter-push
   const localResponses = getResponses(workspace);
   const remoteResponseIds = new Set(remoteResponses.map((r) => r.id));
   const mergedResponses: FormResponse[] = [
@@ -193,17 +194,17 @@ export async function syncFromSupabase(workspace: string): Promise<void> {
   });
   writeJSON(NEWSLETTER_KEY, mergedNews);
 
-  // Publish status, counter, schema
-  if (remotePublished !== null) {
-    writeJSON(PUBLISHED_KEY(workspace), remotePublished);
-  }
+  // Publish status
+  if (remotePublished !== null) writeJSON(PUBLISHED_KEY(workspace), remotePublished);
+
+  // Counters
   if (remoteCounters) {
     writeJSON(VIEW_KEY(workspace), remoteCounters.views);
     writeJSON(START_KEY(workspace), remoteCounters.starts);
   }
-  if (remoteSchema) {
-    writeJSON(SCHEMA_KEY(workspace), remoteSchema);
-  }
+
+  // Schema — tulis ke localStorage agar getCachedSchema bisa serve halaman form tanpa refetch
+  if (remoteSchema) writeJSON(SCHEMA_KEY(workspace), remoteSchema);
 }
 
 export const WORKSPACE_LABELS: Record<string, string> = {

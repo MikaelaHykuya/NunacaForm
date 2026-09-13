@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, CalendarClock, Clock } from 'lucide-react';
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+
 import { getAllPosts } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
@@ -19,7 +19,6 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] font-sans text-white selection:bg-[#FFCC00]/30 flex flex-col">
-      <Navbar />
 
       <section className="pt-40 pb-20 px-6 relative flex-grow">
         <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#FFCC00]/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
@@ -34,7 +33,7 @@ export default async function BlogPage() {
               <span className="text-[#FFCC00] font-bold tracking-[0.3em] uppercase text-sm">BLOG & STUDI KASUS</span>
               <span className="w-12 h-[1px] bg-[#FFCC00]"></span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-black mb-6 text-white uppercase italic tracking-tighter leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-white uppercase italic tracking-tighter leading-[1.1]">
               Belajar dari <span className="text-[#FFCC00]">Pengalaman Nyata.</span>
             </h1>
             <p className="text-white/60 text-lg max-w-2xl mx-auto">

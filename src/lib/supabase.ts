@@ -181,9 +181,10 @@ export interface BlogPostRow {
 
 export async function pullBlogPosts(): Promise<BlogPostRow[]> {
   if (!supabase) return [];
+  // Tidak fetch 'content' di sini — kolom besar itu hanya dibutuhkan di halaman detail
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('slug, title, category, author, author_role, date, read_time, excerpt, content')
+    .select('slug, title, category, author, author_role, date, read_time, excerpt')
     .order('date', { ascending: false });
   if (error || !data) return [];
   return data as BlogPostRow[];
@@ -224,6 +225,7 @@ export interface UseCaseRow {
   subtitle: string;
   description: string;
   icon: string;
+  url: string;
   sort_order: number;
 }
 
@@ -231,7 +233,7 @@ export async function pullUseCases(): Promise<UseCaseRow[]> {
   if (!supabase) return [];
   const { data, error } = await supabase
     .from('usecases')
-    .select('id, title, subtitle, description, icon, sort_order')
+    .select('id, title, subtitle, description, icon, url, sort_order')
     .order('sort_order', { ascending: true });
   if (error || !data) return [];
   return data as UseCaseRow[];

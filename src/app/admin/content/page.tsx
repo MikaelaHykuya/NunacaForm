@@ -51,6 +51,7 @@ function newUseCase(): UseCaseRow {
     subtitle: '',
     description: '',
     icon: 'Sparkles',
+    url: '',
     sort_order: 0,
   };
 }
@@ -183,21 +184,21 @@ export default function AdminContentPage() {
     <div className="min-h-screen bg-[#050505] font-sans text-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#FFCC00]/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
           <div>
             <Link href="/admin" className="inline-flex items-center gap-2 text-white/40 hover:text-[#FFCC00] text-xs font-black uppercase tracking-[0.25em] transition-all hover:-translate-x-1 mb-6">
               <ArrowLeft size={14} /> Dashboard Analitik
             </Link>
-            <h1 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Kelola <span className="text-[#FFCC00]">Konten</span></h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Kelola <span className="text-[#FFCC00]">Konten</span></h1>
             <p className="text-white/50 mt-3 text-sm flex items-center gap-2">
               <Settings2 size={16} className="text-[#FFCC00]" />
               Buat dan ubah artikel blog serta studi kasus — langsung tayang di situs publik.
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => { void logout().then(() => router.push('/')); }}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-red-500/15 border border-white/10 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-white/70 hover:text-red-400 transition-all"
@@ -220,7 +221,7 @@ export default function AdminContentPage() {
         )}
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           <button
             onClick={() => setTab('blog')}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${
@@ -246,8 +247,8 @@ export default function AdminContentPage() {
         {tab === 'blog' ? (
           <div className="grid lg:grid-cols-2 gap-6">
             {/* List */}
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden h-[calc(100vh-320px)] min-h-[400px] flex flex-col">
-              <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
+            <div className="bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden lg:h-[calc(100vh-320px)] min-h-[320px] flex flex-col">
+              <div className="px-4 sm:px-6 py-5 border-b border-white/10 flex items-center justify-between gap-4">
                 <h2 className="text-xs font-black uppercase tracking-[0.25em] text-[#FFCC00] flex items-center gap-3">
                   <Newspaper size={16} /> Daftar Artikel
                 </h2>
@@ -258,14 +259,14 @@ export default function AdminContentPage() {
                   <Plus size={13} /> Artikel Baru
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto custom-scrollbar divide-y divide-white/5">
+              <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar divide-y divide-white/5">
                 {posts.length === 0 ? (
                   <p className="p-8 text-xs font-bold uppercase tracking-widest text-white/30 text-center">
                     Belum ada artikel.
                   </p>
                 ) : (
                   posts.map((p) => (
-                    <div key={p.slug} className="px-6 py-4 flex items-center gap-4 hover:bg-white/5 transition-colors">
+                    <div key={p.slug} className="px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4 hover:bg-white/5 transition-colors">
                       <div className="w-9 h-9 rounded-lg bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[#FFCC00] shrink-0">
                         <FileText size={15} />
                       </div>
@@ -299,7 +300,7 @@ export default function AdminContentPage() {
             </div>
 
             {/* Editor */}
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 lg:h-[calc(100vh-320px)] lg:min-h-[400px] overflow-y-auto custom-scrollbar">
+            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-4 sm:p-6 lg:h-[calc(100vh-320px)] lg:min-h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar">
               {!formPost ? (
                 <div className="h-full flex flex-col items-center justify-center text-center text-white/25 py-16">
                   <Newspaper size={40} className="mb-4" />
@@ -332,7 +333,7 @@ export default function AdminContentPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Kategori</label>
                       <input
@@ -354,7 +355,7 @@ export default function AdminContentPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Penulis</label>
                       <input
@@ -377,7 +378,7 @@ export default function AdminContentPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Waktu Baca</label>
                       <input
@@ -426,8 +427,8 @@ export default function AdminContentPage() {
         ) : (
           <div className="grid lg:grid-cols-2 gap-6">
             {/* List */}
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden h-[calc(100vh-320px)] min-h-[400px] flex flex-col">
-              <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
+            <div className="bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden lg:h-[calc(100vh-320px)] min-h-[320px] flex flex-col">
+              <div className="px-4 sm:px-6 py-5 border-b border-white/10 flex items-center justify-between gap-4">
                 <h2 className="text-xs font-black uppercase tracking-[0.25em] text-[#FFCC00] flex items-center gap-3">
                   <Layout size={16} /> Daftar Studi Kasus
                 </h2>
@@ -438,14 +439,14 @@ export default function AdminContentPage() {
                   <Plus size={13} /> Studi Kasus Baru
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto custom-scrollbar divide-y divide-white/5">
+              <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar divide-y divide-white/5">
                 {useCases.length === 0 ? (
                   <p className="p-8 text-xs font-bold uppercase tracking-widest text-white/30 text-center">
                     Belum ada studi kasus.
                   </p>
                 ) : (
                   useCases.map((u) => (
-                    <div key={u.id} className="px-6 py-4 flex items-center gap-4 hover:bg-white/5 transition-colors">
+                    <div key={u.id} className="px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4 hover:bg-white/5 transition-colors">
                       <div className="w-9 h-9 rounded-lg bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[#FFCC00] shrink-0">
                         <Layout size={15} />
                       </div>
@@ -479,7 +480,7 @@ export default function AdminContentPage() {
             </div>
 
             {/* Editor */}
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 lg:h-[calc(100vh-320px)] lg:min-h-[400px] overflow-y-auto custom-scrollbar">
+            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-4 sm:p-6 lg:h-[calc(100vh-320px)] lg:min-h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar">
               {!formUse ? (
                 <div className="h-full flex flex-col items-center justify-center text-center text-white/25 py-16">
                   <Layout size={40} className="mb-4" />
@@ -531,7 +532,18 @@ export default function AdminContentPage() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls}>Link Situs (opsional, dibuka di tab baru)</label>
+                    <input
+                      type="url"
+                      value={formUse.url}
+                      onChange={(e) => setFormUse({ ...formUse, url: e.target.value })}
+                      className={inputCls}
+                      placeholder="https://nunacagroupindonesia.com/nunaca-..."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Ikon</label>
                       <select

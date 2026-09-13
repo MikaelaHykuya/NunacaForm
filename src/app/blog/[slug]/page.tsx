@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, CalendarClock, Clock } from 'lucide-react';
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+
 import { getAllPosts, getPostBySlug } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
@@ -41,7 +41,6 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] font-sans text-white selection:bg-[#FFCC00]/30 flex flex-col">
-      <Navbar />
 
       <article className="pt-40 pb-20 px-6 relative flex-grow">
         <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#FFCC00]/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>

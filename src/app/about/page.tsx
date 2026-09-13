@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Target, Shield, Users } from 'lucide-react';
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+
 
 export const metadata: Metadata = {
   title: 'Tentang Kami | Nunaca Form',
@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] font-sans text-white selection:bg-yellow-500/30">
-      <Navbar />
 
       <section className="pt-40 pb-20 px-6 max-w-4xl mx-auto">
         <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-[#FFCC00] transition-colors mb-8 text-sm font-bold uppercase tracking-widest">
@@ -26,7 +25,7 @@ export default function AboutPage() {
           <span className="text-[#FFCC00] font-bold tracking-[0.3em] uppercase text-sm">TENTANG KAMI</span>
         </div>
         
-        <h1 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-10 leading-[1.1] italic text-white">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter mb-10 leading-[1.1] italic text-white">
           Membangun Sistem <br/><span className="text-[#FFCC00]">Internal yang Kuat.</span>
         </h1>
         

@@ -32,15 +32,15 @@ function StatCard({ icon, label, value, sub, accent }: {
   icon: React.ReactNode; label: string; value: string; sub?: string; accent?: boolean;
 }) {
   return (
-    <div className={`p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${accent ? 'bg-[#FFCC00]/10 border-[#FFCC00]/40' : 'bg-neutral-900 border-white/10 hover:border-white/20'}`}>
-      <div className="flex items-center gap-4 mb-4">
-        <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${accent ? 'bg-[#FFCC00] text-black' : 'bg-white/10 text-[#FFCC00]'}`}>
+    <div className={`p-4 sm:p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${accent ? 'bg-[#FFCC00]/10 border-[#FFCC00]/40' : 'bg-neutral-900 border-white/10 hover:border-white/20'}`}>
+      <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+        <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 ${accent ? 'bg-[#FFCC00] text-black' : 'bg-white/10 text-[#FFCC00]'}`}>
           {icon}
         </div>
-        <div className="text-[10px] font-black uppercase tracking-widest text-white/40">{label}</div>
+        <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/40 leading-tight">{label}</div>
       </div>
-      <div className="text-4xl font-black uppercase italic tracking-tighter text-white">{value}</div>
-      {sub && <div className="text-[11px] text-white/40 mt-2 font-bold uppercase tracking-wider">{sub}</div>}
+      <div className="text-3xl sm:text-4xl font-black uppercase italic tracking-tighter text-white">{value}</div>
+      {sub && <div className="text-[10px] sm:text-[11px] text-white/40 mt-1 sm:mt-2 font-bold uppercase tracking-wider">{sub}</div>}
     </div>
   );
 }
@@ -162,21 +162,21 @@ export default function AdminDashboard() {
       <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-30"></div>
       <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#FFCC00]/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <div>
             <Link href="/builder" className="inline-flex items-center gap-2 text-white/40 hover:text-[#FFCC00] text-xs font-black uppercase tracking-[0.25em] transition-all hover:-translate-x-1 mb-6">
               <ArrowLeft size={14} /> Admin Builder
             </Link>
-            <h1 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter text-white">Dashboard <span className="text-[#FFCC00]">Analitik</span></h1>
-            <p className="text-white/50 mt-3 flex items-center gap-2 text-sm">
-              <TrendingUp size={16} className="text-[#FFCC00]" />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase italic tracking-tighter text-white">Dashboard <span className="text-[#FFCC00]">Analitik</span></h1>
+            <p className="text-white/50 mt-3 flex items-center gap-2 text-xs sm:text-sm">
+              <TrendingUp size={16} className="text-[#FFCC00] shrink-0" />
               Pantau view, completion rate, dan respons setiap formulir lini usaha.
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/admin/content"
               className="bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-[#FFCC00] transition-all"
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
             <button
               key={id}
               onClick={() => handleWorkspaceTab(id)}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${activeWorkspace === id
+              className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all border ${activeWorkspace === id
                 ? 'bg-[#FFCC00] text-black border-[#FFCC00] shadow-[0_0_20px_rgba(255,204,0,0.3)]'
                 : 'bg-neutral-900 border-white/10 text-white/60 hover:text-white hover:border-white/20'}`}
             >
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Share + QR */}
-        <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 mb-10">
+        <div className="bg-neutral-900 border border-white/10 rounded-2xl p-4 sm:p-6 mb-10">
           <div className="flex items-center gap-4 mb-5">
             <div className="w-11 h-11 rounded-xl bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[#FFCC00]">
               <Share2 size={20} />
@@ -244,20 +244,20 @@ export default function AdminDashboard() {
             </button>
           </div>
           {qrVisible && (
-            <div className="mt-6 flex flex-col items-center gap-4 bg-black/40 border border-white/5 rounded-2xl p-6">
+            <div className="mt-6 flex flex-col items-center gap-4 bg-black/40 border border-white/5 rounded-2xl p-4 sm:p-6">
               <QRCodeSVG value={shareUrl} size={200} fgColor="#FFFFFF" bgColor="#0A0A0A" />
-              <p className="text-xs text-white/40 text-center">Scan untuk membuka formulir {WORKSPACE_LABELS[activeWorkspace]} di HP responden.</p>
+              <p className="text-xs text-white/40 text-center max-w-xs">Scan untuk membuka formulir {WORKSPACE_LABELS[activeWorkspace]} di HP responden.</p>
             </div>
           )}
         </div>
 
         {/* Responses */}
         <div className="bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden mb-10">
-          <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
+          <div className="px-4 sm:px-6 py-5 border-b border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <h2 className="text-xs font-black uppercase tracking-[0.25em] text-[#FFCC00] flex items-center gap-3">
               <CheckCircle2 size={16} /> Respons Tersimpan
             </h2>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
               <button
                 onClick={() => setSyncTick((t) => t + 1)}
                 className="text-[10px] font-bold uppercase tracking-widest text-white/50 hover:text-[#FFCC00] transition-colors flex items-center gap-1"
@@ -282,22 +282,22 @@ export default function AdminDashboard() {
               )}
             </div>
           </div>
-            <div className="max-h-[420px] overflow-y-auto custom-scrollbar divide-y divide-white/5">
+            <div className="max-h-[420px] overflow-y-auto overflow-x-hidden custom-scrollbar divide-y divide-white/5">
               {responses.length === 0 ? (
                 <div className="p-10 text-center">
                   <CheckCircle2 size={32} className="text-white/10 mx-auto mb-3" />
                   <p className="text-xs font-bold uppercase tracking-widest text-white/30">Belum ada respons. Isi formulir lalu kembali ke sini.</p>
                 </div>
               ) : pagedResponses.map((r, idx) => (
-                <div key={r.id} className="px-6 py-5 hover:bg-white/5 transition-colors group">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-[#FFCC00]/10 text-[#FFCC00] border border-[#FFCC00]/30 flex items-center justify-center text-xs font-black">
+                <div key={r.id} className="px-4 sm:px-6 py-5 hover:bg-white/5 transition-colors group">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-7 h-7 rounded-lg bg-[#FFCC00]/10 text-[#FFCC00] border border-[#FFCC00]/30 flex items-center justify-center text-xs font-black shrink-0">
                         {safePage * PAGE_SIZE + idx + 1}
                       </div>
-                      <span className="text-xs font-bold text-white">{WORKSPACE_LABELS[r.workspace] || r.workspace}</span>
+                      <span className="text-xs font-bold text-white truncate">{WORKSPACE_LABELS[r.workspace] || r.workspace}</span>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 shrink-0">
                       <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">
                         {new Date(r.createdAt).toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                       </span>
@@ -314,9 +314,9 @@ export default function AdminDashboard() {
                     {Object.entries(r.answers).map(([qId, value]) => {
                       const q = schema?.questions.find((qs) => qs.id === qId);
                       return (
-                        <div key={qId} className="bg-black/40 border border-white/5 rounded-xl px-4 py-3">
+                        <div key={qId} className="bg-black/40 border border-white/5 rounded-xl px-4 py-3 min-w-0">
                           <div className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-1 truncate">{q?.title || qId}</div>
-                          <div className="text-sm font-medium text-white truncate">{answerLabel(qId, value) || '—'}</div>
+                          <div className="text-sm font-medium text-white truncate break-words">{answerLabel(qId, value) || '—'}</div>
                         </div>
                       );
                     })}
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
               ))}
             </div>
             {responses.length > PAGE_SIZE && (
-              <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
+              <div className="px-4 sm:px-6 py-4 border-t border-white/10 flex items-center justify-between">
                 <button
                   onClick={() => setPage((p) => Math.max(0, p - 1))}
                   disabled={safePage === 0}
@@ -361,19 +361,19 @@ export default function AdminDashboard() {
 
         {/* Newsletter subscribers */}
         <div className="bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden">
-          <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
+          <div className="px-4 sm:px-6 py-5 border-b border-white/10 flex items-center justify-between gap-4">
             <h2 className="text-xs font-black uppercase tracking-[0.25em] text-[#FFCC00] flex items-center gap-3">
               <Mail size={16} /> Newsletter Subscriber
             </h2>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">{subscribers.length} email</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 shrink-0">{subscribers.length} email</span>
           </div>
-          <div className="max-h-[300px] overflow-y-auto custom-scrollbar divide-y divide-white/5">
+          <div className="max-h-[300px] overflow-y-auto overflow-x-hidden custom-scrollbar divide-y divide-white/5">
             {subscribers.length === 0 ? (
               <div className="p-10 text-center">
                 <p className="text-xs font-bold uppercase tracking-widest text-white/30">Belum ada subscriber.</p>
               </div>
             ) : subscribers.map((s) => (
-              <div key={s.email} className="px-6 py-4 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors group">
+              <div key={s.email} className="px-4 sm:px-6 py-4 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors group">
                 <div className="min-w-0">
                   <div className="text-sm font-bold text-white truncate">{s.email}</div>
                   <div className="text-[10px] text-white/30 uppercase tracking-widest mt-0.5">{new Date(s.createdAt).toLocaleString('id-ID')}</div>

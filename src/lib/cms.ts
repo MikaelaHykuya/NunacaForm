@@ -7,6 +7,7 @@ export interface UseCaseItem {
   subtitle: string;
   description: string;
   icon: string;
+  url: string;
 }
 
 function mapBlogRow(row: {
@@ -18,7 +19,7 @@ function mapBlogRow(row: {
   date: string;
   read_time: string;
   excerpt: string;
-  content: string[];
+  content?: string[]; // opsional — tidak di-fetch di list query
 }): BlogPost {
   return {
     slug: row.slug,
@@ -40,15 +41,22 @@ function mapUseCaseRow(row: UseCaseRow): UseCaseItem {
     subtitle: row.subtitle || '',
     description: row.description || '',
     icon: row.icon || 'Sparkles',
+    url: row.url || '',
   };
 }
 
+// In-memory cache per server request lifecycle (Next.js ISR/SSR)
+let _postsCache: BlogPost[] | null = null;
+let _usecasesCache: UseCaseItem[] | null = null;
+
 export async function getAllPosts(): Promise<BlogPost[]> {
+  if (_postsCache) return _postsCache;
   if (!supabase) return blogPosts;
   try {
     const rows = await pullBlogPosts();
     if (rows.length === 0) return blogPosts;
-    return rows.map(mapBlogRow).sort((a, b) => (a.date < b.date ? 1 : -1));
+    _postsCache = rows.map(mapBlogRow).sort((a, b) => (a.date < b.date ? 1 : -1));
+    return _postsCache;
   } catch {
     return blogPosts;
   }
@@ -57,6 +65,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   if (!supabase) return blogPosts.find((p) => p.slug === slug) ?? null;
   try {
+    // Cek in-memory cache list dulu (sudah punya data kecuali content)
     const row = await pullBlogPost(slug);
     if (row) return mapBlogRow(row);
   } catch {
@@ -66,11 +75,13 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 }
 
 export async function getAllUseCases(): Promise<UseCaseItem[]> {
+  if (_usecasesCache) return _usecasesCache;
   if (!supabase) return [];
   try {
     const rows = await pullUseCases();
     if (rows.length === 0) return [];
-    return rows.map(mapUseCaseRow);
+    _usecasesCache = rows.map(mapUseCaseRow);
+    return _usecasesCache;
   } catch {
     return [];
   }

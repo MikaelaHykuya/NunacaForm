@@ -194,8 +194,8 @@ export default function FormEngine({ schema, workspaceId }: FormEngineProps) {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col items-start max-w-3xl"
         >
-          <h1 className="text-5xl md:text-7xl font-black mb-8 text-white uppercase italic tracking-tighter leading-[1.1]">{schema.welcomeScreen.title}</h1>
-          <p className="text-2xl md:text-3xl text-white/50 mb-12 leading-relaxed font-light">{schema.welcomeScreen.description}</p>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 text-white uppercase italic tracking-tighter leading-[1.1]">{schema.welcomeScreen.title}</h1>
+          <p className="text-xl md:text-3xl text-white/50 mb-12 leading-relaxed font-light">{schema.welcomeScreen.description}</p>
           <button
             onClick={() => handleNext()}
             className="group flex items-center gap-3 bg-[#FFCC00] text-black px-10 py-4 rounded-xl font-black hover:bg-yellow-400 transition-all hover:scale-105 active:scale-95 text-xl uppercase tracking-widest shadow-[0_0_30px_rgba(255,204,0,0.3)]"
@@ -228,8 +228,8 @@ export default function FormEngine({ schema, workspaceId }: FormEngineProps) {
           >
             <Check size={48} strokeWidth={4} />
           </motion.div>
-          <h1 className="text-5xl md:text-6xl font-black mb-6 text-white uppercase italic tracking-tighter">{schema.thankYouScreen.title}</h1>
-          <p className="text-2xl text-white/50 mb-12 font-light">{schema.thankYouScreen.description}</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-white uppercase italic tracking-tighter">{schema.thankYouScreen.title}</h1>
+          <p className="text-xl md:text-2xl text-white/50 mb-12 font-light">{schema.thankYouScreen.description}</p>
 
           <Link href="/" className="inline-flex items-center gap-2 bg-transparent border border-white/20 text-white px-8 py-4 rounded-xl font-bold hover:bg-white/5 transition-colors uppercase tracking-widest text-sm">
             <ArrowLeft size={18} /> Kembali ke Beranda
@@ -342,7 +342,7 @@ export default function FormEngine({ schema, workspaceId }: FormEngineProps) {
                     autoFocus
                   />
                 )}
-                <div className="mt-10 flex items-center gap-6">
+                <div className="mt-10 flex flex-wrap items-center gap-6">
                   <button
                     onClick={() => handleNext()}
                     disabled={currentQuestion.required && !inputValue.trim()}
@@ -420,7 +420,7 @@ export default function FormEngine({ schema, workspaceId }: FormEngineProps) {
           : `${((schema.questions.findIndex(q => q.id === currentStep) + 1) / schema.questions.length) * 100}%`;
 
   return (
-    <div className="h-screen w-full bg-[#050505] flex flex-col font-sans text-white relative">
+    <div className="min-h-screen w-full bg-[#050505] flex flex-col font-sans text-white relative">
       {/* Honeypot field — disembunyikan dari manusia, diisi bot */}
       <input
         ref={honeypotRef}
@@ -437,7 +437,7 @@ export default function FormEngine({ schema, workspaceId }: FormEngineProps) {
       <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#FFCC00]/5 rounded-full blur-[150px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#FFCC00]/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-      <div className="flex-1 flex items-center justify-center p-6 md:p-12 md:pl-32 overflow-hidden relative w-full h-full z-10">
+      <div className="flex-1 flex items-center justify-center p-6 md:p-12 md:pl-32 overflow-y-auto relative w-full h-full z-10">
         <AnimatePresence mode="wait">
           {renderContent()}
         </AnimatePresence>

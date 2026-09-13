@@ -21,18 +21,30 @@ function FormLoader() {
   useEffect(() => {
     if (!workspace) return;
     let alive = true;
+
+    const withTimeout = <T,>(promise: Promise<T>, ms: number, fallback: T): Promise<T> =>
+      Promise.race([promise, new Promise<T>((res) => setTimeout(() => res(fallback), ms))]);
+
     (async () => {
-      // Cloud adalah sumber kebenaran: hanya bentuk form yang benar-benar ada yang ditampilkan
-      const cached = getCachedSchema(workspace);
-      const [remote, distant] = await Promise.all([
-        pullSchema(workspace),
-        pullPublished(workspace),
-      ]);
-      if (!alive) return;
-      setSchema((remote as FormSchema | null) ?? cached ?? null);
-      setPublishedState(distant ?? true);
-      setChecked(true);
+      try {
+        const cached = getCachedSchema(workspace);
+        const [remote, distant] = await Promise.all([
+          withTimeout(pullSchema(workspace), 5000, null),
+          withTimeout(pullPublished(workspace), 5000, null),
+        ]);
+        if (!alive) return;
+        setSchema((remote as FormSchema | null) ?? cached ?? null);
+        setPublishedState(distant ?? true);
+      } catch {
+        if (!alive) return;
+        const cached = getCachedSchema(workspace);
+        setSchema(cached ?? null);
+        setPublishedState(true);
+      } finally {
+        if (alive) setChecked(true);
+      }
     })();
+
     return () => {
       alive = false;
     };

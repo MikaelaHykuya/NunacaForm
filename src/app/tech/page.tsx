@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+
 
 export const metadata: Metadata = {
   title: 'Teknologi | Nunaca Form',
@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function TechPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] font-sans text-white selection:bg-yellow-500/30 flex flex-col">
-      <Navbar />
 
       {/* Technology Stack Section */}
       <section className="pt-40 pb-20 px-6 relative flex-grow">
@@ -30,7 +29,7 @@ export default function TechPage() {
               <span className="text-[#FFCC00] font-bold tracking-[0.3em] uppercase text-sm">TECH STACK</span>
               <span className="w-12 h-[1px] bg-[#FFCC00]"></span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-black mb-6 text-white uppercase italic tracking-tighter leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-white uppercase italic tracking-tighter leading-[1.1]">
               Dibangun Untuk <br/><span className="text-[#FFCC00]">Performa.</span>
             </h1>
             <p className="text-white/60 text-lg max-w-2xl mx-auto">Menggunakan teknologi industri terkini untuk memastikan kecepatan eksekusi, keamanan data, dan animasi sekelas aplikasi native.</p>

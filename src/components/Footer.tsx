@@ -17,7 +17,7 @@ export default function Footer() {
           </p>
           
           <div className="flex gap-4">
-            <a href="https://www.instagram.com/nunacagroupindonesia" target="_blank" rel="noopener noreferrer" aria-label="Instagram Nunaca Group" className="w-10 h-10 rounded-full border border-[#FFCC00]/50 flex items-center justify-center text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-colors">
+            <a href="https://www.instagram.com/nunacagroup/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Nunaca Group" className="w-10 h-10 rounded-full border border-[#FFCC00]/50 flex items-center justify-center text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-colors">
               <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -27,7 +27,7 @@ export default function Footer() {
             <a href="https://wa.me/6283181013424" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Nunaca Group" className="w-10 h-10 rounded-full border border-[#FFCC00]/50 flex items-center justify-center text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-colors">
               <MessageCircle size={18} />
             </a>
-            <a href="https://www.tiktok.com/@nunacagroupindonesia" target="_blank" rel="noopener noreferrer" aria-label="TikTok Nunaca Group" className="w-10 h-10 rounded-full border border-[#FFCC00]/50 flex items-center justify-center text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-colors">
+            <a href="https://www.tiktok.com/@nunaca.group" target="_blank" rel="noopener noreferrer" aria-label="TikTok Nunaca Group" className="w-10 h-10 rounded-full border border-[#FFCC00]/50 flex items-center justify-center text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-colors">
               <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
               </svg>
@@ -40,14 +40,38 @@ export default function Footer() {
           <h3 className="text-[#FFCC00] font-bold text-lg mb-4">OUR UNITS</h3>
           <div className="w-10 h-0.5 bg-[#FFCC00]/50 mb-6"></div>
           <ul className="space-y-4 text-sm">
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Beauty Bar</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Barbershop</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Baby & Kids Spa</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Coffee and Pastry</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Agency</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Skincare</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Travel</li>
-            <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span> Nunaca Butik</li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-beauty-bar" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Beauty Bar</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-barbershop" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Barbershop</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-baby-kids-spa" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Baby & Kids Spa</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-coffee-pastry" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Coffee and Pastry</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-agency" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Agency</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-skincare" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Skincare</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-travel" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Travel</a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]"></span>
+              <a href="https://nunacagroupindonesia.com/nunaca-butik" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCC00] transition-colors">Nunaca Butik</a>
+            </li>
           </ul>
         </div>
 
@@ -70,7 +94,7 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-4">
               <Mail className="text-[#FFCC00] shrink-0" size={18} />
-              <span>business@nunacagroupindonesia.com</span>
+              <span className="break-all">business@nunacagroupindonesia.com</span>
             </li>
           </ul>
         </div>
